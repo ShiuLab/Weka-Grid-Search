@@ -125,7 +125,7 @@ class batch_summary(object):
         # And parse all possible outputs.
         weka_output_files = []
         print 'parsing weka output files'
-        for weka_out in self.iter_weka_output(cc_dict):
+        for weka_out, par_tuple in self.iter_weka_output(cc_dict):
             if check_file(weka_out).file_good:
                 if not self.overwrite(weka_out):
                     pass
@@ -143,7 +143,7 @@ class batch_summary(object):
         for description, command_par in cc_dict.iteritems():
             command, par_list = command_par
             for par_tuple in par_list:
-                yield '%s.%s' % (description, '-'.join(par_tuple))
+                yield '%s.%s' % (description, '-'.join(par_tuple)), par_tuple
 
     def batch_auc_calculation(self, weka_output_files):
         '''Runs an R script to calculate the AUCROC on all the parsed outputs.
@@ -159,10 +159,10 @@ class batch_summary(object):
         '''Summarizes the outputs from all the AUCROC files.
         '''
         output = open(self.parameter_file + '.summary', 'w')
-        for weka_out in self.iter_weka_output(cc_dict):
+        for weka_out, par_tuple in self.iter_weka_output(cc_dict):
             if check_file(weka_out).file_good:
                 AUC_line = self.extract_auc(weka_out)
-                output.write('%s\n' % (AUC_line))
+                output.write('%s\t%s\n' % (AUC_line, '\t'.join(par_tuple)))
         output.close()
         
     def extract_auc(self, weka_out):
