@@ -4,7 +4,10 @@ cross validation to parse the results.
 
 Requires the ROCR package and an existing Weka instalation.
 
-Basic pipeline: See the lab protocl for more details.
+Please visit http://shiulab.plantbiology.msu.edu/wiki/index.php/Weka_Grid_Search
+For a more fleshed out protocol.
+
+#Basic pipeline
 1. Create a parameter file that will be used to create commands for 
    sub runs. It looks like this.
 
