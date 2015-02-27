@@ -1,9 +1,4 @@
-#library("caTools")
-#library("grid")
-#library("KernSmooth")
-#library("gtools")
-#library("gdata")
-#library("gplots")
+
 library("ROCR", lib.loc='/mnt/home/seddonal/R/library/')
 cArgs = commandArgs(trailingOnly=TRUE)
 
