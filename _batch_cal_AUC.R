@@ -1,9 +1,8 @@
-# Takes an arbitrary list set of parsed files and cacluates AUC-ROCs
+
 library("ROCR", lib.loc='/mnt/home/seddonal/R/library/')
 cArgs = commandArgs(trailingOnly=TRUE)
 
-# Gets the AUC-ROC values for a file.
-get_perf_AUC <- function(t)
+get_perf_AUC <- function(t) 
 
     {
    ncol = dim(t)[2]
@@ -11,20 +10,19 @@ get_perf_AUC <- function(t)
    perf <- performance(pred, "auc")
    }
 
-# Calculates the standard error for AUC-ROCs
 calculate_auc <- function(prefile){
     file=read.table(prefile, sep = '\t', header = FALSE)
-    # You can choose to invert the predictions and observations.
-    # This allows you to calculate an AUC-ROC based on the negative class.
-    # An invert value of 1 allows you to do this
-       
+    folds=dim(file)[2]/2       
     perf <- get_perf_AUC(file)
 
+    # Get the AUC-ROC for each fold
     c <- c()
-    for(i in 1:10){c <- c(c, as.numeric(perf@y.values[i]))}
+    for(i in seq(1,folds,1)) {
+        c <- c(c, as.numeric(perf@y.values[i]))
+    }
 
     auc_mean <- mean(c)
-    auc_standard_error <- sd(c)/sqrt(10)
+    auc_standard_error <- sd(c)/sqrt(folds)
 
     write.table(paste(auc_mean, auc_standard_error, sep = '\t')
                 , file=paste(prefile, 'AUC', sep=".")
@@ -34,6 +32,5 @@ calculate_auc <- function(prefile){
 }
 
 for(prefile in cArgs){
-    print(prefile)
     calculate_auc(prefile)
     }

@@ -204,12 +204,11 @@ class check_file(object):
     
     def __init__(self, weka_out):
         self.weka_out = weka_out
-        self.function_list = [self.file_exists, self.non_empty, 
+        self.format_checks = [self.file_exists, self.non_empty, 
                           self.contains_predictions]
         # If all functions are true, the file is good.
-        self.file_good = all(function() for function in self.function_list)
+        self.file_good = all(format_check() for format_check in self.format_checks)
 
-    
     def file_exists(self):
         '''Checks that a file exits.
         '''

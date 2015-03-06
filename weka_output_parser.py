@@ -46,7 +46,6 @@ class parse_weka_output(object):
         reg = r'\s*(\d*)\s*\d*:([\-\+\d]*)\s*\d*:([\-\+\d]*)[\s\+]*([\d\.]*)\s*'
         prediction_reg = re.compile(reg)    
         pred_file = open(self.weka_out, 'r')
-        output = open(self.weka_out + '.parsed', 'w')
         instances = {}
         # Extract all the predictions in the file
         for line in pred_file:
@@ -61,15 +60,20 @@ class parse_weka_output(object):
                     instances[inst_number] = [prediction]
                 else:
                     instances[inst_number].append(prediction)
+        pred_file.close()
+        
+        # Determine the number of folds by the number of predictions with
+        # instance number 1.
+        folds = len(instances["1"])
+
         # consolidate the instances into a single file
+        output = open(self.weka_out + '.parsed', 'w')
         for inst_num in sorted(instances):
             inst_set = instances[inst_num]
-            # Skip instance if it has fewer then 10 predictions
-            if len(inst_set) == 10:
+            if len(inst_set) == folds:
                 outline = self.instance_set2line(inst_set)
                 output.write(outline + '\n')
         output.close()
-        pred_file.close()
     
     def line_skip(self, line):
         '''checks if this is an irrelevant line.
@@ -115,6 +119,11 @@ class summarize_weka_output(parse_weka_output):
 
 class batch_summary(object):
     '''Summarizes the outputs based on a grid search parameter file.
+    
+    parameter_file := the file used to create grid_search.
+    overwrite := True/False: should previously parsed files be overwritten
+    invert := Should the +1 and -1 classes be inverted.
+    measure := Caluclate AUC-ROC (AUC) or maxF (maxF)
     '''
     
     def __init__(self, parameter_file, overwrite, invert, measure='AUC'):
@@ -141,18 +150,19 @@ class batch_summary(object):
         
         The "meat and potatoes" of this parsing script.
         '''
+        # Returns a dict of the commmand line files.
         cc_dict = parse_command_file(self.parameter_file)
+        
         # Look through all the weka runs set up in the paramater file
         # And parse all possible outputs.
         weka_output_files = []
-        
         print 'parsing weka output files'
         # converts output to an R digestible format.
         # par_tuple is the tuple of parameters from the grid search that are
         # used in the name of the file.
         for index, weka_out, par_tuple in self.iter_weka_output(cc_dict):
             weka_out = os.path.join(self.out_dir, weka_out)
-            # Check if the file is in the correct format.
+            # From grid_search_cc.py
             if check_file(weka_out).file_good:
                 if not self.overwrite(weka_out):
                     pass
