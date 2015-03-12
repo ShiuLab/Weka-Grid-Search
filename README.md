@@ -12,9 +12,9 @@ on our lab website for more details on this pipeline.
 # Pipeline
 The pipeline involves.
 1. Using `grid_search_cc.py` to create a file containing command lines for all possible parameter combinations specified for the grid search.
-2. Using `qsub_hpc.py` - not included here - to run the command lines as jobs.
-3. Using `grid_search_cc.py` to check for failed jobs, and rerunning as specific in 1. and 2. untill all jobs complete.
-4. Using `weka_output_parser.py` to check the performance of all the parameter combinations.
+1. Using `qsub_hpc.py` - not included here - to run the command lines as jobs.
+1. Using `grid_search_cc.py` to check for failed jobs, and rerunning as specific in 1. and 2. untill all jobs complete.
+1. Using `weka_output_parser.py` to check the performance of all the parameter combinations.
 
 ## Create a parameter file that will be used to create commands for 
    sub runs.
