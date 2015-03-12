@@ -75,7 +75,7 @@ Use the following command:
 `python grid_search_cc.py parameter_file`
 
 It will output a file ending with .runcc, which you can use with qsub_hpc.py
-- not in this repository -  to run the command lines using the PBS scheduler.
+(not in this repository)  to run the command lines using the PBS scheduler.
 A .failed.runcc file will also be created. This script serves the dual
 purposes of creating commands and checking for failed jobs.
 
