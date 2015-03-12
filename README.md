@@ -1,20 +1,25 @@
 These scripts offer a wrapper for running a grid search using weka
 classifiers.
 
-Requires the ROCR package and an existing Weka instalation.
+Requires the `ROCR` for `R` package and an existing `Weka` instalation.
 
-* For mor information about the purpose behind grid searching, please visit
-    this [article](http://en.wikipedia.org/wiki/Hyperparameter_optimization#Grid_search) 
-    on Wikipedia.
+* For more information about the purpose behind grid searching, please visit
+   this [article](http://en.wikipedia.org/wiki/Hyperparameter_optimization#Grid_search) 
+   on Wikipedia.
 * Please visit the fleshed out [protocol](http://shiulab.plantbiology.msu.edu/wiki/index.php/Weka_Grid_Search)
 on our lab website for more details on this pipeline.
 
-# Pipeline
+# Grid Search Pipeline
 The pipeline involves.
-1. Using `grid_search_cc.py` to create a file containing command lines for all possible parameter combinations specified for the grid search.
+
+
+1. Using `grid_search_cc.py` to create a file containing command lines for
+   all possible parameter combinations specified for the grid search.
 1. Using `qsub_hpc.py` - not included here - to run the command lines as jobs.
-1. Using `grid_search_cc.py` to check for failed jobs, and rerunning as specific in 1. and 2. untill all jobs complete.
-1. Using `weka_output_parser.py` to check the performance of all the parameter combinations.
+1. Using `grid_search_cc.py` to check for failed jobs, and rerunning as
+   specific in 1. and 2. untill all jobs complete.
+1. Using `weka_output_parser.py` to check the performance of all the parameter
+   combinations.
 
 ## Create a parameter file that will be used to create commands for 
    sub runs.
