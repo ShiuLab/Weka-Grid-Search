@@ -1,5 +1,10 @@
-These scripts offer a wrapper for running a grid search using weka
+# Introduction
+These scripts offer a wrapper for running a grid search using Weka
 classifiers.
+
+While we could have used Java to do grid searches with Weka, our lab is
+primarily a Python lab. This pipeline also use the more powerful plotting
+functions available through the `R` package `ROCR`.
 
 Requires the `ROCR` for `R` package and an existing `Weka` instalation.
 
@@ -25,6 +30,8 @@ The pipeline involves.
    sub runs.
 
 The parameter file should contain the following:
+
+
 1. A basic file name that will be used for all the output files. I like to 
     use the same name as the parameter file to keep things consistent. This
     is formated as `desc#basic_file_name` in the parameter file.
@@ -76,7 +83,7 @@ command as the previous step.
 Then, run any jobs in the .failed.runcc file using qsub_hpc.py. Do this untill 
 .failed.runcc comes back empty.
 
-# Parse the outputs
+## Parse the outputs
 Use the following command:
 `python weka_output_parser.py parameter_file`
 
@@ -86,5 +93,5 @@ Check the .summary.AUC file for your best performing model. I do this
 By sorting the the file by the second column using the Unix commands:
 `sort -gk 2 paramter_file.summary.AUC | tail -n` 
 
-# Plot curves for the best model.
+## Plot curves for the best model.
 You can use script_plot_AUC_ROC.R to make PR and ROC curves.
