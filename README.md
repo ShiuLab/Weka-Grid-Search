@@ -52,8 +52,10 @@ The parameter file should contain the following:
     parameter listed out in space delimited format.
 5. A line to denote that all parameters are specified. This is coded as 
     `end#` in the parameter file.
+
+
 Here is a full example. It sets up an SVM grid search that adjusts parameters
-    for the C constant and gamma of the RBF kernel.
+for the C constant and gamma of the RBF kernel.
     
 ```
 desc#basic_file_name
@@ -63,6 +65,9 @@ command#java weka.classifiers.functions.SMO -t [ARFF] -c last -p 0 -C %s -B -K 2
 0.1 0.2 0.5 1.0
 end#
 ```
+
+Note that the possible values for `-C` are in the first line after `command#` 
+and the possible values for `-G` are in the second line.
 I will call this file `parameter_file` for the remainder of the protocol.
 
 ## Create a file of command lines.
