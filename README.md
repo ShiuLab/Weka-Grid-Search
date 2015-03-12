@@ -26,8 +26,10 @@ The pipeline involves.
 1. Using `weka_output_parser.py` to check the performance of all the parameter
    combinations.
 
-## Create a parameter file that will be used to create commands for 
-   sub runs.
+## Create a grid search parameter file.
+
+The parameter file is used to define the data used in the grid search, the
+classifier you want to use, and the parameters you want to grid search through.
 
 The parameter file should contain the following:
 
