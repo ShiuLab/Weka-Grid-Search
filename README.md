@@ -1,4 +1,4 @@
-### Introduction
+# Introduction
 These scripts offer a wrapper for running a grid search using Weka
 classifiers.
 
